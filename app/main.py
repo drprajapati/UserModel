@@ -1,10 +1,33 @@
-from typing import List
+from enum import Enum
+from typing import List, Optional
 from uuid import uuid4, UUID
 
 from fastapi import FastAPI
 from typing import List
 from uuid import uuid4
-from model.model import Gender, Role, User
+
+from pydantic import BaseModel
+
+
+class Gender(Enum):
+    male = "male"
+    female = "female"
+
+
+class Role(Enum):
+    admin = "admin"
+    user = "user"
+    student = "student"
+
+
+class User(BaseModel):
+    id: Optional[UUID] = uuid4()
+    first_name: str
+    gender: Gender
+    middle_name: Optional[str]
+    last_name: str
+    roles: List[Role]
+
 
 api = FastAPI()
 
